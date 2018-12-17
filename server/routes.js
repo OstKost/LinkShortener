@@ -2,7 +2,7 @@ const express = require('express')
 const controller = require('./controller')
 const router = express.Router()
 
-router.get('/:shortUrl', controller.getFullUrl)
+router.get('/:shortCode', controller.getFullUrl)
 
 router.post('/', controller.createShortUrl)
 
