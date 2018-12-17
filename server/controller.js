@@ -3,7 +3,7 @@ getFullUrl = (req, res) => {
     res.send('getFullUrl')
 }
 
-createShortUrl = () => {
+createShortUrl = (req, res) => {
     console.log('createShortUrl')
     res.send('createShortUrl')
 }
