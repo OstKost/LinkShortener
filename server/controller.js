@@ -1,17 +1,25 @@
 const urlSchema = require('./schema')
 const errorHandler = require('./utils/errorHandler')
+const urlChecker = require('./utils/urlChecker')
 
 const getFullUrl = async (req, res) => {
 	try {
-		const url = await urlSchema.findOne({ shortUrl: req.params.shortUrl })
-        res.status(200).json(url)
-        // res.redirect(301, url)
+		const result = await urlSchema.findOne({
+			shortUrl: req.params.shortUrl
+		})
+		if (result) {
+			res.redirect(301, result.fullUrl)
+		} else {
+			const originalUrl = req.protocol + '://' + req.get('host')
+			res.redirect(301, originalUrl)
+			// errorHandler(res, { message: 'URL not found!' })
+		}
 	} catch (error) {
 		errorHandler(res, error)
 	}
 }
 
-const create = async (req, res) => {
+const createShortUrl = async (req, res) => {
 	let fullUrl = ''
 	let shortUrl = ''
 	// если введенный полный адрес существует, то возвращаем его
@@ -19,19 +27,26 @@ const create = async (req, res) => {
 	if (fullUrl) {
 		res.status(200).json(fullUrl)
 		return
+	} else {
+		fullUrl = req.body.fullUrl
 	}
 	// если введенный короткий адрес существует, то возвращаем ошибку
-	shortUrl = await urlSchema.findOne({ shortUrl: req.body.shortUrl })
+	shortUrl = req.body.shortUrl && shortUrlExists(req.body.shortUrl)
 	if (shortUrl) {
 		errorHandler(res, { message: 'Short URL already exists!' })
 		return
 	}
+	// проверяем введенный полный адрес на работоспособность
+	const urlExist = await urlChecker.checkUrl(fullUrl)
+	if (!urlExist) {
+        errorHandler(res, {message: 'URL is not responding!'})
+    }
 	// создаём короткий адрес
-	shortUrl = req.body.shortUrl || generateShortUrl()
+	shortUrl = req.body.shortUrl || (await generateShortUrl())
 	const expiration = generateExpirationDate()
 	try {
 		url = await urlSchema.create({
-			fullUrl: req.body.fullUrl,
+			fullUrl,
 			shortUrl,
 			expiration
 		})
@@ -41,9 +56,15 @@ const create = async (req, res) => {
 	}
 }
 
+async function shortUrlExists(shortUrl) {
+	return !!(await urlSchema.findOne({ shortUrl }))
+}
+
 async function generateShortUrl() {
-	let shortUrl = Math.floor(Math.random() * 6 + 2).toString(32)
-	if (generateShortUrl(shortUrl)) shortUrl = generateShortUrl()
+	let shortUrl = Math.random()
+		.toString(32)
+		.slice(2, 8)
+	if (await shortUrlExists(shortUrl)) shortUrl = generateShortUrl()
 	return shortUrl
 }
 
@@ -59,5 +80,5 @@ function generateExpirationDate() {
 
 module.exports = {
 	getFullUrl,
-	create
+	createShortUrl
 }

@@ -4,6 +4,6 @@ const router = express.Router()
 
 router.get('/:shortUrl', controller.getFullUrl)
 
-router.post('/', controller.create)
+router.post('/', controller.createShortUrl)
 
 module.exports = router

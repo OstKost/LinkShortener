@@ -17,6 +17,6 @@ mongoose
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-app.use('/api', routes)
+app.use('/', routes)
 
 module.exports = app
