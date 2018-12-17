@@ -1,0 +1,11 @@
+{
+    "name": "link-shortener",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+      "server": "node ./server/index"
+    },
+    "author": "OstKost",
+    "license": "ISC"
+  }
+  
