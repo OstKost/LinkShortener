@@ -41,10 +41,6 @@ const create = async (req, res) => {
 	}
 }
 
-async function shortUrlExists(shortUrl) {
-	return !!(await urlSchema.findOne({ shortUrl }))
-}
-
 async function generateShortUrl() {
 	let shortUrl = Math.floor(Math.random() * 6 + 2).toString(32)
 	if (generateShortUrl(shortUrl)) shortUrl = generateShortUrl()
