@@ -3,7 +3,8 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
-      "server": "node ./server/index"
+      "server": "node ./server/index",
+      "client": "npm run start --prefix client"
     },
     "author": "OstKost",
     "license": "ISC"
