@@ -12,9 +12,6 @@ const getFullUrl = async (req, res) => {
 			res.sendFile(
 				path.resolve(__dirname, '..', 'client', 'build', 'index.html')
 			)
-			// const originalUrl = req.protocol + '://' + req.get('host')
-			// res.redirect(301, originalUrl)
-			// errorHandler(res, { message: 'URL not found!' })
 		}
 	} catch (error) {
 		errorHandler(res, error)
@@ -22,44 +19,52 @@ const getFullUrl = async (req, res) => {
 }
 
 const createShortUrl = async (req, res) => {
-	let fullUrl = ''
-	let shortCode = ''
-	// если введенный полный адрес существует, то возвращаем его
-	fullUrl = await urlSchema.findOne({ fullUrl: req.body.fullUrl })
-	if (fullUrl) {
-		res.status(200).json(fullUrl)
-		return
-	} else {
-		fullUrl = req.body.fullUrl
-	}
+	const reqCode = req.body.shortCode
+	const reqUrl = req.body.fullUrl
+	console.log('reqCode', reqCode)
+	console.log('reqUrl', reqUrl)
 	// если введенный короткий адрес существует, то возвращаем ошибку
-	shortCode = req.body.shortCode && shortCodeExists(req.body.shortCode)
-	if (shortCode) {
-		errorHandler(res, { message: 'Short URL already exists!' })
+	const existCode = reqCode && (await shortCodeExists(reqCode))
+	if (existCode) {
+		errorHandler(res, { message: 'Sorry. Same short URL already exist!' })
 		return
 	}
+
 	// проверяем введенный полный адрес на работоспособность
-	fullUrl = await urlChecker.checkUrl(fullUrl)
-	console.log(fullUrl)
+	const fullUrl = await urlChecker.checkUrl(reqUrl)
 	if (!fullUrl) {
 		errorHandler(res, { message: 'URL is not responding!' })
 		return
 	}
-	// создаём короткий адрес
-	shortCode = req.body.shortUrl || (await generateShortCode())
+
+	// если введенный полный адрес существует, то возвращаем его
+	const existData = await urlSchema.findOne({ fullUrl })
+	if (existData) {
+		res.status(200).json({
+			...existData._doc,
+			success: true,
+			message: 'Same full URL already exist!'
+		})
+		return
+	}
+
+	// создаём короткий код, адрес и дату удаления
+	const shortCode = reqCode || (await generateShortCode())
 	const shortUrl = `${req.protocol}://${req.get('host')}/${shortCode}`
 	const expiration = generateExpirationDate()
 	// записываем в базу
 	try {
 		const response = await urlSchema.create({
 			fullUrl,
-			shortUrl,
 			shortCode,
+			shortUrl,
 			expiration
 		})
-
+		console.log('RESPONSE')
+		console.log(response)
 		res.status(200).json({
 			...response._doc,
+			success: true,
 			message: 'You short URL is ready! Copy and share it!'
 		})
 	} catch (error) {
@@ -67,8 +72,8 @@ const createShortUrl = async (req, res) => {
 	}
 }
 
-async function shortCodeExists(shortUrl) {
-	return !!(await urlSchema.findOne({ shortUrl }))
+async function shortCodeExists(shortCode) {
+	return !!(await urlSchema.findOne({ shortCode }))
 }
 
 async function generateShortCode() {

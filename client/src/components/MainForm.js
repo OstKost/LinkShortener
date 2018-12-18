@@ -53,13 +53,20 @@ export default class MainForm extends Component {
 				fullUrl: this.state.fullUrl,
 				shortCode: this.state.shortCode
 			})
-
-			this.setState({
-				fullUrl: response.data.fullUrl,
-				shortUrl: response.data.shortUrl,
-				message: response.data.message,
-				loading: false
-			})
+			if (response.data.success) {
+				this.setState({
+					fullUrl: response.data.fullUrl,
+					shortUrl: response.data.shortUrl,
+					message: response.data.message,
+					loading: false
+				})
+			} else {
+				this.setState({
+					message: response.data.message,
+					shortUrl: '',
+					loading: false
+				})
+			}
 		} catch (error) {
 			this.setState({
 				loading: false,
@@ -73,7 +80,7 @@ export default class MainForm extends Component {
 		// const regStr = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 		const regStr = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 		return regStr.test(url)
-	}	
+	}
 
 	render() {
 		return (
