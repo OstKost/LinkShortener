@@ -4,7 +4,7 @@ const UInput = props => {
 	return (
 		<div className="form-label-group">
 			<input className="form-control" {...props} />
-			<label htmlFor={props.id}>{props.label}</label>
+			<label htmlFor={props.id}>{props.placeholder}</label>
 		</div>
 	)
 }
