@@ -1,27 +1,31 @@
 const axios = require('axios')
-const url = require('url')
+const _url = require('url')
 
 async function checkUrl(fullUrl) {
-	const result = url.parse(fullUrl)
+	const parsedUrl = _url.parse(fullUrl)
+	let url = ''
 
-	if (result.protocol) {
+	if (parsedUrl.protocol) {
+		url = parsedUrl.href
 		try {
-			if (await axios.head(result.href)) return true
+			if (await axios.head(url)) return url
 		} catch (error) {
-			// console.error(error)
+			console.error(error.message)
 		}
 	}
 
 	try {
-		if (await axios.head(`https://${result.href}`)) return true
+		url = `https://${parsedUrl.href}`
+		if (await axios.head(url)) return url
 	} catch (error) {
-		// console.error(error)
+		console.error(error.message)
 	}
 
 	try {
-		if (await axios.head(`http://${result.href}`)) return true
+		url = `http://${parsedUrl.href}`
+		if (await axios.head(url)) return url
 	} catch (error) {
-		// console.error(error)
+		console.error(error.message)
 	}
 
 	return false

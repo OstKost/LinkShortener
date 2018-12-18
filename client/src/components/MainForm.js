@@ -57,8 +57,8 @@ export default class MainForm extends Component {
 			this.setState({
 				fullUrl: response.data.fullUrl,
 				shortUrl: response.data.shortUrl,
-				loading: false,
-				message: 'You short URL is ready! Copy and share it!'
+				message: response.data.message,
+				loading: false
 			})
 		} catch (error) {
 			console.error(error)

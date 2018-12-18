@@ -37,8 +37,9 @@ const createShortUrl = async (req, res) => {
 		return
 	}
 	// проверяем введенный полный адрес на работоспособность
-	const urlExist = await urlChecker.checkUrl(fullUrl)
-	if (!urlExist) {
+	fullUrl = await urlChecker.checkUrl(fullUrl)
+	console.log(fullUrl)
+	if (!fullUrl) {
 		errorHandler(res, { message: 'URL is not responding!' })
 		return
 	}
@@ -48,13 +49,17 @@ const createShortUrl = async (req, res) => {
 	const expiration = generateExpirationDate()
 	// записываем в базу
 	try {
-		url = await urlSchema.create({
+		const response = await urlSchema.create({
 			fullUrl,
 			shortUrl,
 			shortCode,
 			expiration
 		})
-		res.status(200).json(url)
+
+		res.status(200).json({
+			...response._doc,
+			message: 'You short URL is ready! Copy and share it!'
+		})
 	} catch (error) {
 		errorHandler(res, error)
 	}
