@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import FormHeader from './FormHeader'
 import UInput from './UI/UInput'
 import UButton from './UI/UButton'
+import FormFooter from './FormFooter'
 
 export default class MainForm extends Component {
 	state = {
@@ -33,9 +34,7 @@ export default class MainForm extends Component {
 
 				<UButton type="submit" text="Generate" />
 
-				<p className="mt-5 mb-3 text-muted text-center">
-					&copy; 2017-2018
-				</p>
+				<FormFooter />
 			</form>
 		)
 	}

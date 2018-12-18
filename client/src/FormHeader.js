@@ -3,7 +3,7 @@ import React from 'react'
 
 const FormHeader = () => {
 	return (
-		<div className="text-center mb-4">
+		<header className="text-center mb-4">
 			<img
 				className="mb-4"
 				src={img_phoenix}
@@ -17,7 +17,7 @@ const FormHeader = () => {
 				links.
 			</p>
 			<code>Just give it a try!</code>
-		</div>
+		</header>
 	)
 }
 
