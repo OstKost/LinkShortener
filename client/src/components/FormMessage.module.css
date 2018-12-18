@@ -1,0 +1,10 @@
+.messageWrapper {
+	margin-bottom: 1rem;
+	/* overflow: hidden; */
+}
+
+.linkWrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}

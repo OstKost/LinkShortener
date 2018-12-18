@@ -3,8 +3,9 @@ import React from 'react'
 const UButton = props => {
 	return (
 		<button
-			className={`btn btn-lg btn-primary ${props.classes}`}
+			className={`btn ${props.classes}`}
 			type={props.type}
+			onClick={props.onClick}
 		>
 			{props.text}
 		</button>

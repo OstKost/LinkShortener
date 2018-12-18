@@ -7,23 +7,47 @@ import FormMessage from './FormMessage'
 
 export default class MainForm extends Component {
 	state = {
-		fullUrl: '',
-		shortCode: '',
-		shortUrl: '',
+		fullUrl: 'google.com',
+		shortCode: 'goo',
+		shortUrl: 'lh.com/goo',
 		loading: false,
 		error: false,
 		message: 'Just give it a try!'
 	}
 
 	onInputChange = event => {
-		this.setState({
-			[event.target.id]: event.target.value
-		})
+		const url = event.target.value
+		const newState = {
+			[event.target.id]: url
+		}
+
+		if (
+			event.target.id === 'fullUrl' &&
+			this.validUrl(event.target.value)
+		) {
+			newState.error = false
+			newState.message = 'Seems like an valid URL. Short it!'
+		} else {
+			newState.error = true
+			newState.message = 'URL is not valid!'
+		}
+
+		this.setState({ ...newState })
 	}
 
 	onFormSubmit = event => {
 		event.preventDefault()
 		console.log(this.state)
+		this.setState({
+			loading: true,
+			message: 'Wait a second...'
+		})
+	}
+
+	validUrl(url) {
+		// const regStr = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
+		const regStr = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
+		return regStr.test(url)
 	}
 
 	render() {
@@ -51,7 +75,14 @@ export default class MainForm extends Component {
 					onChange={this.onInputChange}
 				/>
 
-				<UButton type="submit" text="Generate" classes="btn-block" />
+				<UButton
+					type="submit"
+					text="Generate"
+					classes="btn-lg btn-primary btn-block"
+					disabled={
+						this.state.loading || this.state.error ? true : false
+					}
+				/>
 
 				<FormFooter />
 			</form>

@@ -1,4 +1,4 @@
-import img_phoenix from './images/phoenix.png'
+import img_phoenix from '../images/phoenix.png'
 import React from 'react'
 
 const FormHeader = () => {

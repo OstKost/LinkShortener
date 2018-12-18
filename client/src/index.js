@@ -1,10 +1,8 @@
 import './index.css'
 import React from 'react'
 import { render } from 'react-dom'
-import MainForm from './MainForm'
+import MainForm from './components/MainForm'
 
-const App = () => {
-	return <MainForm />
-}
+const App = () => <MainForm />
 
 render(<App />, document.querySelector('#root'))
