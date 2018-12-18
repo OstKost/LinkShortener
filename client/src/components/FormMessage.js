@@ -5,7 +5,7 @@ import styles from './FormMessage.module.css'
 export default class FormMessage extends Component {
 	state = {
 		message: '',
-		height: '0px'
+		height: 'auto'
 	}
 
 	onCopyClick = () => {
@@ -20,13 +20,36 @@ export default class FormMessage extends Component {
 		})
 	}
 
-	componentDidMount() {
-		if (this.props.shortUrl) {
-			this.setState({
-				height: 'auto'
-			})
-		}
-	}
+	renderLink = () =>
+		this.props.shortUrl ? (
+			<div
+				className={styles.linkWrapper}
+				style={{
+					height: this.state.height
+				}}
+			>
+				<UButton
+					type="button"
+					text={this.props.shortUrl}
+					classes="btn-lg btn-link"
+					onClick={this.onLinkClick}
+				/>
+				<UButton
+					type="button"
+					text="Copy"
+					classes="btn-success"
+					onClick={this.onCopyClick}
+				/>
+			</div>
+		) : null
+
+	// componentWillReceiveProps() {
+	// 	if (!this.props.shortUrl) {
+	// 		this.setState({
+	// 			height: '0px'
+	// 		})
+	// 	}
+	// }
 
 	render() {
 		return (
@@ -35,25 +58,7 @@ export default class FormMessage extends Component {
 					<code>{this.state.message || this.props.message}</code>
 				</p>
 
-				<div
-					className={styles.linkWrapper}
-					style={{
-						height: this.state.height
-					}}
-				>
-					<UButton
-						type="button"
-						text={this.props.shortUrl}
-						classes="btn-lg btn-link"
-						onClick={this.onLinkClick}
-					/>
-					<UButton
-						type="button"
-						text="Copy"
-						classes="btn-success"
-						onClick={this.onCopyClick}
-					/>
-				</div>
+				{this.renderLink()}
 			</div>
 		)
 	}

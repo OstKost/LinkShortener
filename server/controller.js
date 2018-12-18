@@ -1,17 +1,19 @@
 const urlSchema = require('./schema')
 const errorHandler = require('./utils/errorHandler')
 const urlChecker = require('./utils/urlChecker')
+const path = require('path')
 
 const getFullUrl = async (req, res) => {
 	try {
-		const result = await urlSchema.findOne({
-			shortUrl: req.params.shortUrl
-		})
+		const result = await urlSchema.findOne({ ...req.params })
 		if (result) {
 			res.redirect(301, result.fullUrl)
 		} else {
-			const originalUrl = req.protocol + '://' + req.get('host')
-			res.redirect(301, originalUrl)
+			res.sendFile(
+				path.resolve(__dirname, '..', 'client', 'build', 'index.html')
+			)
+			// const originalUrl = req.protocol + '://' + req.get('host')
+			// res.redirect(301, originalUrl)
 			// errorHandler(res, { message: 'URL not found!' })
 		}
 	} catch (error) {
