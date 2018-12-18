@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import FormHeader from './FormHeader'
 import FormFooter from './FormFooter'
 import UInput from './UI/UInput'
@@ -7,41 +8,66 @@ import FormMessage from './FormMessage'
 
 export default class MainForm extends Component {
 	state = {
-		fullUrl: 'google.com',
-		shortCode: 'goo',
-		shortUrl: 'lh.com/goo',
+		fullUrl: '',
+		shortCode: '',
+		shortUrl: '',
 		loading: false,
-		error: false,
+		error: true,
 		message: 'Just give it a try!'
 	}
 
 	onInputChange = event => {
-		const url = event.target.value
+		const value = event.target.value
+		const id = event.target.id
+
 		const newState = {
-			[event.target.id]: url
+			[id]: value
 		}
 
-		if (
-			event.target.id === 'fullUrl' &&
-			this.validUrl(event.target.value)
-		) {
-			newState.error = false
-			newState.message = 'Seems like an valid URL. Short it!'
-		} else {
-			newState.error = true
-			newState.message = 'URL is not valid!'
+		if (id === 'fullUrl') {
+			if (!value) {
+				newState.error = true
+				newState.message = 'URL field is empty!'
+			} else if (value && this.validUrl(value)) {
+				newState.error = false
+				newState.message = 'Seems like an valid URL. Short it!'
+			} else {
+				newState.error = true
+				newState.message = 'URL is not valid!'
+			}
 		}
 
 		this.setState({ ...newState })
 	}
 
-	onFormSubmit = event => {
+	onFormSubmit = async event => {
 		event.preventDefault()
-		console.log(this.state)
+
 		this.setState({
 			loading: true,
 			message: 'Wait a second...'
 		})
+
+		try {
+			const response = await axios.post('/', {
+				fullUrl: this.state.fullUrl,
+				shortCode: this.state.shortCode
+			})
+			console.log(response.data)
+			this.setState({
+				fullUrl: response.data.fullUrl,
+				shortUrl: response.data.shortUrl,
+				loading: false,
+				message: 'You short URL is ready! Copy and share it!'
+			})
+		} catch (error) {
+			console.error(error)
+			this.setState({
+				loading: false,
+				error: true,
+				message: error.message
+			})
+		}
 	}
 
 	validUrl(url) {

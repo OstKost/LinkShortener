@@ -5,7 +5,7 @@ import styles from './FormMessage.module.css'
 export default class FormMessage extends Component {
 	state = {
 		message: '',
-		height: 'auto'
+		height: '0px'
 	}
 
 	onCopyClick = () => {
@@ -20,20 +20,27 @@ export default class FormMessage extends Component {
 		})
 	}
 
+	componentDidMount() {
+		if (this.props.shortUrl) {
+			this.setState({
+				height: 'auto'
+			})
+		}
+	}
+
 	render() {
-		console.log(this.props)
 		return (
-			<div
-				className={styles.messageWrapper}
-				style={{
-					height: this.state.height
-				}}
-			>
+			<div className={styles.messageWrapper}>
 				<p className="text-center">
 					<code>{this.state.message || this.props.message}</code>
 				</p>
 
-				<div className={styles.linkWrapper}>
+				<div
+					className={styles.linkWrapper}
+					style={{
+						height: this.state.height
+					}}
+				>
 					<UButton
 						type="button"
 						text={this.props.shortUrl}
