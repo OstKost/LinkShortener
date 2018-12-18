@@ -3,12 +3,16 @@ import FormHeader from './FormHeader'
 import FormFooter from './FormFooter'
 import UInput from './UI/UInput'
 import UButton from './UI/UButton'
+import FormMessage from './FormMessage'
 
 export default class MainForm extends Component {
 	state = {
 		fullUrl: '',
 		shortCode: '',
-		shortUrl: ''
+		shortUrl: '',
+		loading: false,
+		error: false,
+		message: 'Just give it a try!'
 	}
 
 	onInputChange = event => {
@@ -26,6 +30,8 @@ export default class MainForm extends Component {
 		return (
 			<form className="form-signin" onSubmit={this.onFormSubmit}>
 				<FormHeader />
+
+				<FormMessage {...this.state} />
 
 				<UInput
 					type="text"
@@ -45,20 +51,7 @@ export default class MainForm extends Component {
 					onChange={this.onInputChange}
 				/>
 
-				<UButton type="submit" text="Generate" />
-
-				<div>
-					<h6>Your short link is ready! Copy and share it!</h6>
-					<div
-						style={{
-							display: 'flex',
-							justifyContent: 'space-between'
-						}}
-					>
-						<a href="http://google.com">http://g.com/dkajgs</a>
-						<button>Copy</button>
-					</div>
-				</div>
+				<UButton type="submit" text="Generate" classes="btn-block" />
 
 				<FormFooter />
 			</form>

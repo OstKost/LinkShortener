@@ -15,8 +15,7 @@ const FormHeader = () => {
 			<p>
 				This service turns your long URLs into shorter, more shareable
 				links.
-			</p>
-			<code>Just give it a try!</code>
+			</p>			
 		</header>
 	)
 }
