@@ -1,58 +1,26 @@
-import React, { Component } from 'react'
+import React from 'react'
 import UButton from './UI/UButton'
 import styles from './FormMessage.module.css'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
-export default class FormMessage extends Component {
-	state = {
-		message: '',
-		height: 'auto'
-	}
-
-	onCopyClick = () => {
-		this.setState({
-			message: 'Link is copied! Now just share it!'
-		})
-	}
-
-	onLinkClick = () => {
-		this.setState({
-			message: 'You will be redirected in a second.'
-		})
-	}
-
-	renderLink = () =>
-		this.props.shortUrl ? (
-			<div
-				className={styles.linkWrapper}
-				style={{
-					height: this.state.height
-				}}
-			>
+const renderLink = ({ shortUrl, onCopyClick }) =>
+	shortUrl ? (
+		<div className={styles.linkWrapper}>
+			<CopyToClipboard text={shortUrl} onCopy={onCopyClick}>
 				<UButton
 					type="button"
-					text={this.props.shortUrl}
+					text={shortUrl}
 					classes="btn-lg btn-link"
-					onClick={this.onLinkClick}
 				/>
-				<CopyToClipboard
-					text={this.props.shortUrl}
-					onCopy={this.onCopyClick}
-				>
-					<UButton type="button" text="Copy" classes="btn-success" />
-				</CopyToClipboard>
-			</div>
-		) : null
+			</CopyToClipboard>
+			<CopyToClipboard text={shortUrl} onCopy={onCopyClick}>
+				<UButton type="button" text="Copy" classes="btn-success" />
+			</CopyToClipboard>
+		</div>
+	) : null
 
-	render() {
-		return (
-			<div className={styles.messageWrapper}>
-				<p className="text-center">
-					<code>{this.state.message || this.props.message}</code>
-				</p>
-
-				{this.renderLink()}
-			</div>
-		)
-	}
+const FormMessage = props => {
+	return <div className={styles.messageWrapper}>{renderLink(props)}</div>
 }
+
+export default FormMessage

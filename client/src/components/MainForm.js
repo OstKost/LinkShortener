@@ -82,12 +82,25 @@ export default class MainForm extends Component {
 		return regStr.test(url)
 	}
 
+	onCopyClick = () => {
+		this.setState({
+			message: 'Link is copied! Now just share it!'
+		})
+	}
+
 	render() {
 		return (
 			<form className="form-signin" onSubmit={this.onFormSubmit}>
 				<FormHeader />
 
-				<FormMessage {...this.state} />
+				<p className="text-center">
+					<code>{this.state.message}</code>
+				</p>
+
+				<FormMessage
+					shortUrl={this.state.shortUrl}
+					onCopyClick={this.onCopyClick}
+				/>
 
 				<UInput
 					type="text"
