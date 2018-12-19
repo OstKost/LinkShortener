@@ -5,7 +5,9 @@
 	"scripts": {
 		"server-dev": "npm run start --prefix server",
 		"client": "npm run start --prefix client",
-		"server": "npm run server --prefix server"
+		"client-build": "npm run build --prefix client",
+		"server-win": "npm run server-win --prefix server",
+		"server": "npm run server-win --prefix server"
 	},
 	"author": "OstKost",
 	"license": "ISC"
