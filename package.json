@@ -7,7 +7,7 @@
 		"client": "npm run start --prefix client",
 		"client-build": "npm run build --prefix client",
 		"server-win": "npm run server-win --prefix server",
-		"server": "npm run server-win --prefix server"
+		"server": "npm run server --prefix server"
 	},
 	"author": "OstKost",
 	"license": "ISC"
