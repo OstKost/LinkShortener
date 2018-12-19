@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import UButton from './UI/UButton'
 import styles from './FormMessage.module.css'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 export default class FormMessage extends Component {
 	state = {
@@ -34,22 +35,14 @@ export default class FormMessage extends Component {
 					classes="btn-lg btn-link"
 					onClick={this.onLinkClick}
 				/>
-				<UButton
-					type="button"
-					text="Copy"
-					classes="btn-success"
-					onClick={this.onCopyClick}
-				/>
+				<CopyToClipboard
+					text={this.props.shortUrl}
+					onCopy={this.onCopyClick}
+				>
+					<UButton type="button" text="Copy" classes="btn-success" />
+				</CopyToClipboard>
 			</div>
 		) : null
-
-	// componentWillReceiveProps() {
-	// 	if (!this.props.shortUrl) {
-	// 		this.setState({
-	// 			height: '0px'
-	// 		})
-	// 	}
-	// }
 
 	render() {
 		return (
