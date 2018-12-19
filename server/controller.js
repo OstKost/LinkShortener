@@ -32,7 +32,6 @@ const createShortUrl = async (req, res) => {
 
 	// проверяем введенный полный адрес на работоспособность
 	const fullUrl = await urlChecker.checkUrl(reqUrl)
-	console.log(fullUrl)
 	if (!fullUrl) {
 		errorHandler(res, { message: 'URL is not responding!' })
 		return
