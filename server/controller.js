@@ -7,6 +7,7 @@ const getFullUrl = async (req, res) => {
 	try {
 		const result = await urlSchema.findOne({ ...req.params })
 		if (result) {
+			await urlSchema.updateOne({ _id: result.id }, { used: result.used + 1 })
 			res.redirect(301, result.fullUrl)
 		} else {
 			res.sendFile(
@@ -58,8 +59,9 @@ const createShortUrl = async (req, res) => {
 			fullUrl,
 			shortCode,
 			shortUrl,
-			expiration
-		})		
+			expiration,
+			used: 0
+		})
 		res.status(200).json({
 			...response._doc,
 			success: true,
