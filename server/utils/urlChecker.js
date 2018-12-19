@@ -2,11 +2,13 @@ const axios = require('axios')
 const _url = require('url')
 
 async function checkUrl(fullUrl) {
-	const parsedUrl = _url.parse(fullUrl)
+	const { protocol, href } = { ..._url.parse(fullUrl) }
+	const baseUrl = `${href}${href.slice(-1) === '/' ? '' : '/'}`
 	let url = ''
 
-	if (parsedUrl.protocol) {
-		url = parsedUrl.href
+	// если в адресе есть http или https
+	if (protocol) {
+		url = baseUrl
 		try {
 			if (await axios.head(url)) return url
 		} catch (error) {
@@ -14,15 +16,16 @@ async function checkUrl(fullUrl) {
 		}
 	}
 
+	// если https или http нет в адресе
 	try {
-		url = `https://${parsedUrl.href}`
+		url = `https://${baseUrl}`
 		if (await axios.head(url)) return url
 	} catch (error) {
 		console.error(error.message)
 	}
 
 	try {
-		url = `http://${parsedUrl.href}`
+		url = `http://${baseUrl}`
 		if (await axios.head(url)) return url
 	} catch (error) {
 		console.error(error.message)

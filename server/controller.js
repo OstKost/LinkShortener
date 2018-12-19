@@ -21,8 +21,7 @@ const getFullUrl = async (req, res) => {
 const createShortUrl = async (req, res) => {
 	const reqCode = req.body.shortCode
 	const reqUrl = req.body.fullUrl
-	console.log('reqCode', reqCode)
-	console.log('reqUrl', reqUrl)
+
 	// если введенный короткий адрес существует, то возвращаем ошибку
 	const existCode = reqCode && (await shortCodeExists(reqCode))
 	if (existCode) {
@@ -32,6 +31,7 @@ const createShortUrl = async (req, res) => {
 
 	// проверяем введенный полный адрес на работоспособность
 	const fullUrl = await urlChecker.checkUrl(reqUrl)
+	console.log(fullUrl)
 	if (!fullUrl) {
 		errorHandler(res, { message: 'URL is not responding!' })
 		return
@@ -59,9 +59,7 @@ const createShortUrl = async (req, res) => {
 			shortCode,
 			shortUrl,
 			expiration
-		})
-		console.log('RESPONSE')
-		console.log(response)
+		})		
 		res.status(200).json({
 			...response._doc,
 			success: true,

@@ -1,12 +1,10 @@
 .messageWrapper {
 	margin-bottom: 1rem;
-	/* overflow: hidden; */
 }
 
 .linkWrapper {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	overflow: hidden;
 	transition: all 0.3s ease-in-out;
 }
