@@ -3,7 +3,7 @@ const _url = require('url')
 
 async function checkUrl(fullUrl) {
 	const { protocol, href } = { ..._url.parse(fullUrl) }
-	const baseUrl = `${href}${href.slice(-1) === '/' ? '' : '/'}`
+	const baseUrl = href.slice(-1) === '/' ? href.slice(0, -1) : href
 	let url = ''
 
 	// если в адресе есть http или https
