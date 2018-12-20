@@ -26,7 +26,7 @@ app.use('/', routes)
 if (process.env.NODE_ENV === 'production') {
 	const buildDir = path.resolve(__dirname, '..', 'client', 'build')
 	app.use(express.static(buildDir))
-	app.get('/*', (req, res) => {
+	app.get('*', (req, res) => {
 		res.sendFile(path.resolve(buildDir, 'index.html'))
 	})
 }
