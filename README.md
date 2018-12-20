@@ -1,6 +1,6 @@
 # URL Shortener App
 
-Application for shortening long URL addresses to more convenient and readable short URL addresses
+Application for shortening long URL addresses to more convenient and readable short URL addresses  
 Приложение для укорачивания длинных URL адресов в более удобные и читабельные короткие URL адреса
 
 ## Main stack
