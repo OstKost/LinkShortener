@@ -12,7 +12,8 @@ export default class MainForm extends Component {
 		shortCode: '',
 		shortUrl: '',
 		loading: false,
-		error: true,
+		errorUrl: true,
+		errorCode: false,
 		message: 'Just give it a try!'
 	}
 
@@ -24,15 +25,29 @@ export default class MainForm extends Component {
 			[id]: value
 		}
 
+		if (id === 'shortCode') {
+			if (!value) {
+				newState.errorCode = false
+				newState.message = 'Just give it a try!'
+			} else if (this.validCode(value)) {
+				newState.errorCode = false
+				newState.message = 'Your short URL is valid. Go on!'
+			} else {
+				newState.errorCode = true
+				newState.message =
+					'Your short URL is not valid. Try another one!'
+			}
+		}
+
 		if (id === 'fullUrl') {
 			if (!value) {
-				newState.error = true
+				newState.errorUrl = true
 				newState.message = 'URL field is empty!'
 			} else if (value && this.validUrl(value)) {
-				newState.error = false
+				newState.errorUrl = false
 				newState.message = 'Seems like an valid URL. Short it!'
 			} else {
-				newState.error = true
+				newState.errorUrl = true
 				newState.message = 'URL is not valid!'
 			}
 		}
@@ -70,7 +85,6 @@ export default class MainForm extends Component {
 		} catch (error) {
 			this.setState({
 				loading: false,
-				error: true,
 				message: error.message
 			})
 		}
@@ -79,6 +93,11 @@ export default class MainForm extends Component {
 	validUrl(url) {
 		const regStr = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-zA-Z0-9]+([-.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 		return regStr.test(url)
+	}
+
+	validCode(code) {
+		const regStr = /^[a-zA-Z0-9]{1,}$/
+		return regStr.test(code)
 	}
 
 	onCopyClick = () => {
@@ -124,7 +143,11 @@ export default class MainForm extends Component {
 					text="Generate"
 					classes="btn-lg btn-primary btn-block"
 					disabled={
-						this.state.loading || this.state.error ? true : false
+						this.state.loading ||
+						this.state.errorUrl ||
+						this.state.errorCode
+							? true
+							: false
 					}
 				/>
 
