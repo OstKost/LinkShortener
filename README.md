@@ -37,13 +37,21 @@ Git, NodeJS and MongoDB must be installed on the server // Git, NodeJS и MongoD
     > git clone https://github.com/OstKost/UrlShortener.git
 2. change directory to cloned folder (by default it will be "UrlShortener")
     > cd UrlShortener
-3. build front-end
+3. install packages
+    > cd ./server
+    > npm i
+    > cd ../client
+    > npm i
+    > cd ..
+4. build front-end
     > npm run client-build
-4. install global "pm2"
+5. install global "pm2"
     > npm i -g pm2
-5. if MongoDB is not running, then start it
-6. if necessary, modify the "config.json" and "ecosystem.config.js" files for your purposes
-7. run the application
+6. if MongoDB is not running, then start it  
+    example for Linux
+    > sudo service mongod start
+7. if necessary, modify the "config.json" and "ecosystem.config.js" files for your purposes
+8. run the application
     > pm2 start ecosystem.config.js
 
 ###### русский
@@ -52,13 +60,21 @@ Git, NodeJS and MongoDB must be installed on the server // Git, NodeJS и MongoD
     > git clone https://github.com/OstKost/UrlShortener.git
 2. перейтиде созданную папку (по умолчанию это будет "UrlShortener")
     > cd UrlShortener
-3. соберите клиентскую часть
+3. установите пакеты
+    > cd ./server
+    > npm i
+    > cd ../client
+    > npm i
+    > cd ..
+4. соберите клиентскую часть
     > npm run client-build
-4. глобально установите пакет "pm2"
+5. глобально установите пакет "pm2"
     > npm i -g pm2
-5. если MongoDB не запущен, запустите его
-6. если нужно, измените файлы «config.json» и «ecosystem.config.js» для ваших целей
-7. запустите приложение
+6. если MongoDB не запущен, запустите его  
+    пример для Linux
+    > sudo service mongod start
+7. если нужно, измените файлы «config.json» и «ecosystem.config.js» для ваших целей
+8. запустите приложение
     > pm2 start ecosystem.config.js
 
 ## Description // Описание

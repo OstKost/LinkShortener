@@ -1,5 +1,5 @@
 {
-	"name": "link-shortener",
+	"name": "url-shortener",
 	"version": "1.0.0",
 	"description": "",
 	"scripts": {
@@ -10,5 +10,11 @@
 		"server": "npm run server --prefix server"
 	},
 	"author": "OstKost",
-	"license": "ISC"
+	"email": "web@ostkost.ru",
+	"license": "ISC",
+	"homepage": "https://ostkost.fvds.ru",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/OstKost/UrlShortener"
+	}
 }
