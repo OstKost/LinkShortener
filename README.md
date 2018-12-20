@@ -38,10 +38,10 @@ Git, NodeJS and MongoDB must be installed on the server // Git, NodeJS и MongoD
 2. change directory to cloned folder (by default it will be "UrlShortener")
     > cd UrlShortener
 3. install packages
-    > cd ./server
-    > npm i
-    > cd ../client
-    > npm i
+    > cd ./server  
+    > npm i  
+    > cd ../client  
+    > npm i  
     > cd ..
 4. build front-end
     > npm run client-build
@@ -61,10 +61,10 @@ Git, NodeJS and MongoDB must be installed on the server // Git, NodeJS и MongoD
 2. перейтиде созданную папку (по умолчанию это будет "UrlShortener")
     > cd UrlShortener
 3. установите пакеты
-    > cd ./server
-    > npm i
-    > cd ../client
-    > npm i
+    > cd ./server  
+    > npm i  
+    > cd ../client  
+    > npm i  
     > cd ..
 4. соберите клиентскую часть
     > npm run client-build
