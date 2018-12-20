@@ -5,8 +5,9 @@ const mongoose = require('mongoose')
 const morgan = require('morgan')('dev')
 const routes = require('./routes')
 const path = require('path')
+const config = require('../config.json')
 
-const mongoURI = 'mongodb://localhost:27017/shorturls'
+const mongoURI = `mongodb://${config.mongo_uri}/${config.dbname}`
 
 mongoose
 	.connect(

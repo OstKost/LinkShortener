@@ -23,4 +23,4 @@ function watchingExpiredUrls() {
 	})
 }
 
-module.exports = watchingExpiredUrls
+watchingExpiredUrls()
