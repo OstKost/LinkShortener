@@ -33,6 +33,7 @@ Git, NodeJS and MongoDB must be installed on the server // Git, NodeJS и MongoD
 6) if necessary, modify the "config.json" and "ecosystem.config.js" files for your purposes
 7) run command "pm2 start ecosystem.config.js" to run the application
 
+
 1) клонируйте git репозиторий "git clone https://github.com/OstKost/UrlShortener.git"
 2) перейтиде созданную папку (по умолчанию это будет "UrlShortener") "cd UrlShortener"
 3) запустить команду "npm run client"
@@ -51,6 +52,7 @@ Git, NodeJS and MongoDB must be installed on the server // Git, NodeJS и MongoD
 - Addresses are stored for 15 days from the moment of creation, expired addresses are deleted every day at midnight
 - The entered addresses are checked for performance
 - Logging of requests is conducted by means of pm2 and morgan
+
 
 - Приложение укорачивает длинные URL адреа в более короткие и удобные
 - Есть возможность ввести свой короткий URL
