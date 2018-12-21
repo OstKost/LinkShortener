@@ -29,10 +29,11 @@ export default class MainForm extends Component {
 		if (id === 'shortCode') {
 			if (!value) {
 				newState.errorCode = false
-				newState.message = 'Just give it a try!'
+				newState.message = `"Do or do not. There is no try."– Yoda`
 			} else if (this.validCode(value)) {
 				newState.errorCode = false
-				newState.message = 'Your short URL is valid. Go on!'
+				newState.message =
+					'Code is valid.\nMay the short URL be with you.'
 			} else {
 				newState.errorCode = true
 				newState.message =
