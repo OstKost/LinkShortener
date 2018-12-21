@@ -13,6 +13,7 @@ export default class MainForm extends Component {
 		shortUrl: '',
 		loading: false,
 		errorUrl: true,
+		touchedUrl: false,
 		errorCode: false,
 		message: 'Just give it a try!'
 	}
@@ -40,6 +41,7 @@ export default class MainForm extends Component {
 		}
 
 		if (id === 'fullUrl') {
+			newState.touchedUrl = true
 			if (!value) {
 				newState.errorUrl = true
 				newState.message = 'URL field is empty!'
@@ -128,6 +130,13 @@ export default class MainForm extends Component {
 					autoFocus={true}
 					value={this.state.fullUrl}
 					onChange={this.onInputChange}
+					classes={
+						this.state.touchedUrl
+							? this.state.errorUrl
+								? 'is-invalid'
+								: 'is-valid'
+							: ''
+					}
 				/>
 
 				<UInput
@@ -136,6 +145,13 @@ export default class MainForm extends Component {
 					placeholder="Your own code for short URL"
 					value={this.state.shortCode}
 					onChange={this.onInputChange}
+					classes={
+						this.state.shortCode
+							? this.state.errorCode
+								? 'is-invalid'
+								: 'is-valid'
+							: ''
+					}
 				/>
 
 				<UButton
