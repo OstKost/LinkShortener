@@ -7,7 +7,7 @@ const getFullUrl = async (req, res) => {
 	try {
 		const result = await urlSchema.findOne({ ...req.params })
 		if (result) {
-			await urlSchema.updateOne({ _id: result.id }, { used: result.used + 1 })
+			urlSchema.updateOne({ _id: result.id }, { used: result.used + 1 })
 			res.redirect(301, result.fullUrl)
 		} else {
 			res.sendFile(

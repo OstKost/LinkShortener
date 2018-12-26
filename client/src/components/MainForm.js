@@ -33,7 +33,7 @@ export default class MainForm extends Component {
 			} else if (this.validCode(value)) {
 				newState.errorCode = false
 				newState.message =
-					'Code is valid.\nMay the short URL be with you.'
+					'Code is valid. May the short URL be with you.'
 			} else {
 				newState.errorCode = true
 				newState.message =
